@@ -5,6 +5,9 @@
 int isNumeroPrimo(int numero);
 int mod_exp(int b, int e, int p);
 int getNumeroPrimo();
+int isNumeroPrimo(int numero);
+int isRaizPrimitiva(int numero_primo, int raiz_primitiva);
+int getRaizPrimitiva(int numero_primo);
 
 // Exponenciación modular eficiente
 int mod_exp(int b, int e, int p) {
@@ -32,10 +35,6 @@ int getNumeroPrimo(){
     return numero_primo;
 }
 
-/* int getRaizPrimitiva(){
-   return 1;
-} */
-
 int isNumeroPrimo(int numero){
     // Comprueba si el número es primo.
     if(numero < 2) {
@@ -52,13 +51,36 @@ int isNumeroPrimo(int numero){
     return 1;
 }
 
-/* int isRaizPrimitiva(int numero_primo, int raiz_primitiva, int modulo){
-    return 1;
-} */
+int isRaizPrimitiva(int numero_primo, int raiz_primitiva) {
+    int phi = numero_primo - 1; // φ(p) = p - 1 para números primos
+    int usados[phi];
+    for (int i = 0; i < phi; i++) {
+        usados[i] = 0;
+    }
+
+    for (int i = 1; i <= phi; i++) {
+        int valor = mod_exp(raiz_primitiva, i, numero_primo);
+        if (usados[valor - 1] == 1) {
+            return 0; // Si se repite un valor, no es raíz primitiva
+        }
+        usados[valor - 1] = 1;
+    }
+
+    return 1; // Si genera todos los valores únicos, es raíz primitiva
+}
+
+int getRaizPrimitiva(int numero_primo) {
+    for (int g = 2; g < numero_primo; g++) {
+        if (isRaizPrimitiva(numero_primo, g)) {
+            return g; // Devuelve la primera raíz primitiva encontrada
+        }
+    }
+    return -1; // Si no se encuentra ninguna raíz primitiva (lo cual no debería ocurrir para números primos)
+}
 
 int main() {
     int p = getNumeroPrimo();
-    int r = 6;
+    int r = getRaizPrimitiva(p);
     int x, X, Y, K;
 
     srand(time(NULL));
