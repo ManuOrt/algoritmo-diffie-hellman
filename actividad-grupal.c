@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+int isNumeroPrimo(int numero);
+int mod_exp(int b, int e, int p);
+int getNumeroPrimo();
+
 // Exponenciación modular eficiente
 int mod_exp(int b, int e, int p) {
     int i, x, power;
@@ -17,8 +21,43 @@ int mod_exp(int b, int e, int p) {
     return x;
 }
 
+int getNumeroPrimo(){
+    int numero_primo = 1;
+    while (isNumeroPrimo(numero_primo) == 0)
+    {
+        printf("Introduce un número primo: ");
+        scanf("%d", &numero_primo);
+    }
+
+    return numero_primo;
+}
+
+/* int getRaizPrimitiva(){
+   return 1;
+} */
+
+int isNumeroPrimo(int numero){
+    // Comprueba si el número es primo.
+    if(numero < 2) {
+        return 0;
+    }
+    // Comprueba si el número es divisible por algún número desde 2 hasta la raíz cuadrada del número.
+    for (int i = 2; i * i <= numero; i++) {
+        if (numero % i == 0) {
+            printf("El número %d no es primo.\n", numero);
+            return 0; 
+        }
+    }
+    printf("El número %d es primo.\n", numero);
+    return 1;
+}
+
+/* int isRaizPrimitiva(int numero_primo, int raiz_primitiva, int modulo){
+    return 1;
+} */
+
 int main() {
-    int p = 761;
+    int p = getNumeroPrimo();
     int r = 6;
     int x, X, Y, K;
 
