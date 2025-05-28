@@ -89,16 +89,16 @@ void realizarIntercambioClave() {
     x = rand() % (p - 2) + 1;
     X = mod_exp(r, x, p);
 
-    printf("Send the number X: %d to your partner.\n", X);
+    printf("Enviar el número: %d a tu compañero.\n", X);
 
-    printf("Enter the Y number that your partner has sent you: ");
+    printf("Introduce el número que te ha compartido tu compañero: ");
     scanf("%d", &Y);
 
     K = mod_exp(Y, x, p);
-    printf("The shared secret key is: %d\n", K);
+    printf("La clave privada es: %d\n", K);
 
     // Evita que la consola se cierre de inmediato
-    printf("Press ENTER to exit...");
+    printf("Presiona una tecla para volver...");
     getchar(); // para limpiar el buffer después de scanf
     getchar(); // para esperar ENTER
 }
