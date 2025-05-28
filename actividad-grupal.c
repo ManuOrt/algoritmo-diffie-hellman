@@ -5,6 +5,9 @@
 int isNumeroPrimo(int numero);
 int mod_exp(int b, int e, int p);
 int getNumeroPrimo();
+void realizarIntercambioClave();
+void mostrarMenu();
+void mostrarCreditos();
 
 // Exponenciación modular eficiente
 int mod_exp(int b, int e, int p) {
@@ -17,46 +20,37 @@ int mod_exp(int b, int e, int p) {
         }
         e >>= 1;
         power = (power * power) % p;
-    }   
+    }
     return x;
 }
 
 int getNumeroPrimo(){
     int numero_primo = 1;
-    while (isNumeroPrimo(numero_primo) == 0)
-    {
-        printf("Introduce un número primo: ");
+    while (numero_primo <= 1 || isNumeroPrimo(numero_primo) == 0) {
+        printf("Introduce un número primo mayor que 1: ");
         scanf("%d", &numero_primo);
+        if (numero_primo <= 1) {
+            printf("El número debe ser mayor que 1.\n");
+        }
     }
-
     return numero_primo;
 }
 
-/* int getRaizPrimitiva(){
-   return 1;
-} */
-
 int isNumeroPrimo(int numero){
-    // Comprueba si el número es primo.
     if(numero < 2) {
         return 0;
     }
-    // Comprueba si el número es divisible por algún número desde 2 hasta la raíz cuadrada del número.
     for (int i = 2; i * i <= numero; i++) {
         if (numero % i == 0) {
             printf("El número %d no es primo.\n", numero);
-            return 0; 
+            return 0;
         }
     }
     printf("El número %d es primo.\n", numero);
     return 1;
 }
 
-/* int isRaizPrimitiva(int numero_primo, int raiz_primitiva, int modulo){
-    return 1;
-} */
-
-int main() {
+void realizarIntercambioClave() {
     int p = getNumeroPrimo();
     int r = 6;
     int x, X, Y, K;
@@ -77,6 +71,41 @@ int main() {
     printf("Press ENTER to exit...");
     getchar(); // para limpiar el buffer después de scanf
     getchar(); // para esperar ENTER
+}
 
+void mostrarCreditos() {
+    printf("\n--- Créditos ---\n");
+    printf("Participantes:\n");
+    printf("1. Sergio Paredes Medina\n");
+    printf("2. Manuel Ortega Martí\n");
+    printf("Gracias por usar este programa.\n");
+}
+
+void mostrarMenu() {
+    int opcion;
+
+    do {
+        printf("\n--- Menú ---\n");
+        printf("1. Realizar intercambio de claves\n");
+        printf("2. Salir\n");
+        printf("Seleccione una opción: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                realizarIntercambioClave();
+                break;
+            case 2:
+                mostrarCreditos();
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opción no válida. Intente nuevamente.\n");
+        }
+    } while (opcion != 2);
+}
+
+int main() {
+    mostrarMenu();
     return 0;
 }
