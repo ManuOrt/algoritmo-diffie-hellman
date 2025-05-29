@@ -5,6 +5,7 @@
 int isNumeroPrimo(int numero);
 int mod_exp(int b, int e, int p);
 int getNumeroPrimo();
+void intercambioClavesDiffieHellman(int p, int r, int x, int X, int K, int Y);
 void realizarIntercambioClave();
 void realizarIntercambioClaveEstatico();
 void mostrarMenu();
@@ -91,11 +92,7 @@ int getRaizPrimitiva(int numero_primo) {
     return -1;
 }
 
-void realizarIntercambioClave() {
-    int p = getNumeroPrimo();
-    int r = getRaizPrimitiva(p);
-    int x, X, Y, K;
-
+void intercambioClavesDiffieHellman(int p, int r, int x, int X, int K, int Y) {
     srand(time(NULL));
     x = rand() % (p - 2) + 1;
     X = mod_exp(r, x, p);
@@ -108,12 +105,17 @@ void realizarIntercambioClave() {
     K = mod_exp(Y, x, p);
     printf("La clave privada es: %d\n", K);
 
-    // Evita que la consola se cierre de inmediato
     printf("Presiona una tecla para volver...");
-    // para limpiar el buffer después de scanf
-    getchar(); 
-    // para esperar ENTER
-    getchar(); 
+    getchar();
+    getchar();
+}
+
+void realizarIntercambioClave() {
+    int p = getNumeroPrimo();
+    int r = getRaizPrimitiva(p);
+    int x, X, Y, K;
+
+    intercambioClavesDiffieHellman(p, r, x, X, K, Y);
 }
 
 void realizarIntercambioClaveEstatico() {
@@ -123,24 +125,7 @@ void realizarIntercambioClaveEstatico() {
     int r = 5; 
     int x, X, Y, K;
 
-    printf("Usando número primo estático: %d\n", p);
-    printf("Usando raíz primitiva estática: %d\n", r);
-
-    srand(time(NULL));
-    x = rand() % (p - 2) + 1;
-    X = mod_exp(r, x, p);
-
-    printf("Enviar el número: %d a tu compañero.\n", X);
-
-    printf("Introduce el número que te ha compartido tu compañero: ");
-    scanf("%d", &Y);
-
-    K = mod_exp(Y, x, p);
-    printf("La clave privada es: %d\n", K);
-
-    printf("Presiona una tecla para volver...");
-    getchar();
-    getchar();
+    intercambioClavesDiffieHellman(p, r, x, X, K, Y);
 }
 
 
