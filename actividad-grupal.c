@@ -6,6 +6,7 @@ int isNumeroPrimo(int numero);
 int mod_exp(int b, int e, int p);
 int getNumeroPrimo();
 void realizarIntercambioClave();
+void realizarIntercambioClaveEstatico();
 void mostrarMenu();
 void mostrarCreditos();
 int isNumeroPrimo(int numero);
