@@ -103,6 +103,32 @@ void realizarIntercambioClave() {
     getchar(); // para esperar ENTER
 }
 
+void realizarIntercambioClaveEstatico() {
+    int p = 23; // Número primo estático
+    int r = 5;  // Raíz primitiva estática
+    int x, X, Y, K;
+
+    printf("Usando número primo estático: %d\n", p);
+    printf("Usando raíz primitiva estática: %d\n", r);
+
+    srand(time(NULL));
+    x = rand() % (p - 2) + 1;
+    X = mod_exp(r, x, p);
+
+    printf("Enviar el número: %d a tu compañero.\n", X);
+
+    printf("Introduce el número que te ha compartido tu compañero: ");
+    scanf("%d", &Y);
+
+    K = mod_exp(Y, x, p);
+    printf("La clave privada es: %d\n", K);
+
+    printf("Presiona una tecla para volver...");
+    getchar();
+    getchar();
+}
+
+
 void mostrarCreditos() {
     printf("\n--- Créditos ---\n");
     printf("Participantes:\n");
@@ -117,7 +143,8 @@ void mostrarMenu() {
     do {
         printf("\n--- Menú ---\n");
         printf("1. Realizar intercambio de claves\n");
-        printf("2. Salir\n");
+        printf("2. Realizar intercambio con valores estáticos\n");
+        printf("3. Salir\n");
         printf("Seleccione una opción: ");
         scanf("%d", &opcion);
 
@@ -126,13 +153,16 @@ void mostrarMenu() {
                 realizarIntercambioClave();
                 break;
             case 2:
+                realizarIntercambioClaveEstatico();
+                break;
+            case 3:
                 mostrarCreditos();
                 printf("Saliendo del programa...\n");
                 break;
             default:
                 printf("Opción no válida. Intente nuevamente.\n");
         }
-    } while (opcion != 2);
+    } while (opcion != 3);
 }
 
 int main() {
