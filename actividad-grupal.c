@@ -29,9 +29,11 @@ int mod_exp(int b, int e, int p) {
 
 int getNumeroPrimo(){
     int numero_primo = 1;
+    // Solicita al usuario un número primo mayor que 1
     while (numero_primo <= 1 || isNumeroPrimo(numero_primo) == 0) {
         printf("Introduce un número primo mayor que 1: ");
         scanf("%d", &numero_primo);
+        // Verifica si el numero primo es mayor que 1
         if (numero_primo <= 1) {
             printf("El número debe ser mayor que 1.\n");
         }
@@ -40,10 +42,13 @@ int getNumeroPrimo(){
 }
 
 int isNumeroPrimo(int numero){
+    // Si el número es menor que 2, no es primo
     if(numero < 2) {
         return 0;
     }
+    // Verifica si el número es divisible por algún número desde 2 hasta la raíz cuadrada del número
     for (int i = 2; i * i <= numero; i++) {
+        // Si el número es divisible por i, no es primo
         if (numero % i == 0) {
             printf("El número %d no es primo.\n", numero);
             return 0;
@@ -54,30 +59,35 @@ int isNumeroPrimo(int numero){
 }
 
 int isRaizPrimitiva(int numero_primo, int raiz_primitiva) {
-    int phi = numero_primo - 1; // φ(p) = p - 1 para números primos
+    // φ(p) = p - 1 para números primos
+    int phi = numero_primo - 1; 
     int usados[phi];
+    // Inicializa el array usados para marcar los valores generados
     for (int i = 0; i < phi; i++) {
         usados[i] = 0;
     }
-
+    // Verifica si la raíz primitiva es válida
     for (int i = 1; i <= phi; i++) {
         int valor = mod_exp(raiz_primitiva, i, numero_primo);
         if (usados[valor - 1] == 1) {
-            return 0; // Si se repite un valor, no es raíz primitiva
+            // Si se repite un valor, no es raíz primitiva
+            return 0; 
         }
         usados[valor - 1] = 1;
     }
-
-    return 1; // Si genera todos los valores únicos, es raíz primitiva
+    // Si genera todos los valores únicos, es raíz primitiva
+    return 1; 
 }
 
 int getRaizPrimitiva(int numero_primo) {
     for (int g = 2; g < numero_primo; g++) {
         if (isRaizPrimitiva(numero_primo, g)) {
-            return g; // Devuelve la primera raíz primitiva encontrada
+            // Devuelve la primera raíz primitiva encontrada
+            return g; 
         }
     }
-    return -1; // Si no se encuentra ninguna raíz primitiva (lo cual no debería ocurrir para números primos)
+    // Si no se encuentra ninguna raíz primitiva (lo cual no debería ocurrir para números primos)
+    return -1;
 }
 
 void realizarIntercambioClave() {
@@ -99,13 +109,17 @@ void realizarIntercambioClave() {
 
     // Evita que la consola se cierre de inmediato
     printf("Presiona una tecla para volver...");
-    getchar(); // para limpiar el buffer después de scanf
-    getchar(); // para esperar ENTER
+    // para limpiar el buffer después de scanf
+    getchar(); 
+    // para esperar ENTER
+    getchar(); 
 }
 
 void realizarIntercambioClaveEstatico() {
-    int p = 23; // Número primo estático
-    int r = 5;  // Raíz primitiva estática
+    // Número primo estático
+    int p = 23; 
+    // Raíz primitiva estática
+    int r = 5; 
     int x, X, Y, K;
 
     printf("Usando número primo estático: %d\n", p);
