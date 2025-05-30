@@ -2,25 +2,27 @@
 #include <stdlib.h>
 #include <time.h>
 
-int isNumeroPrimo(int numero);
+// Declaración de funciones en snake_case
+int es_numero_primo(int numero);
 int mod_exp(int b, int e, int p);
-int getNumeroPrimo();
-void intercambioClavesDiffieHellman(int p, int r, int x, int X, int K, int Y);
-void realizarIntercambioClave();
-void realizarIntercambioClaveEstatico();
-void mostrarMenu();
-void mostrarCreditos();
-int isNumeroPrimo(int numero);
-int isRaizPrimitiva(int numero_primo, int raiz_primitiva);
-int getRaizPrimitiva(int numero_primo);
+int obtener_numero_primo();
+void intercambio_claves_diffie_hellman(int p, int r, int x, int X, int K, int Y);
+void realizar_intercambio_clave();
+void realizar_intercambio_clave_estatico();
+void mostrar_menu();
+void mostrar_creditos();
+int es_raiz_primitiva(int numero_primo, int raiz_primitiva);
+int obtener_raiz_primitiva(int numero_primo);
 
 // Exponenciación modular eficiente
 int mod_exp(int b, int e, int p) {
     int i, x, power;
     x = 1;
+    // Calcula b mod p para usar como base inicial
     power = b % p;
     for (i = 0; i < 8 * sizeof(int); i++) {
         if (e & 1) {
+            // Multiplica el resultado por la potencia actual y aplica el módulo
             x = (x * power) % p;
         }
         e >>= 1;
@@ -29,10 +31,11 @@ int mod_exp(int b, int e, int p) {
     return x;
 }
 
-int getNumeroPrimo(){
+// Solicita al usuario un número primo mayor que 1
+int obtener_numero_primo() {
     int numero_primo = 1;
     // Solicita al usuario un número primo mayor que 1
-    while (numero_primo <= 1 || isNumeroPrimo(numero_primo) == 0) {
+    while (numero_primo <= 1 || es_numero_primo(numero_primo) == 0) {
         printf("Introduce un número primo mayor que 1: ");
         scanf("%d", &numero_primo);
         // Verifica si el numero primo es mayor que 1
@@ -43,7 +46,8 @@ int getNumeroPrimo(){
     return numero_primo;
 }
 
-int isNumeroPrimo(int numero){
+// Verifica si un número es primo
+int es_numero_primo(int numero) {
     // Si el número es menor que 2, no es primo
     if(numero < 2) {
         return 0;
@@ -60,7 +64,8 @@ int isNumeroPrimo(int numero){
     return 1;
 }
 
-int isRaizPrimitiva(int numero_primo, int raiz_primitiva) {
+// Verifica si una raíz es primitiva para un número primo dado
+int es_raiz_primitiva(int numero_primo, int raiz_primitiva) {
     // φ(p) = p - 1 para números primos
     int phi = numero_primo - 1; 
     int usados[phi];
@@ -81,9 +86,10 @@ int isRaizPrimitiva(int numero_primo, int raiz_primitiva) {
     return 1; 
 }
 
-int getRaizPrimitiva(int numero_primo) {
+// Busca y devuelve la primera raíz primitiva encontrada para un número primo
+int obtener_raiz_primitiva(int numero_primo) {
     for (int g = 2; g < numero_primo; g++) {
-        if (isRaizPrimitiva(numero_primo, g)) {
+        if (es_raiz_primitiva(numero_primo, g)) {
             // Devuelve la primera raíz primitiva encontrada
             return g; 
         }
@@ -92,7 +98,8 @@ int getRaizPrimitiva(int numero_primo) {
     return -1;
 }
 
-void intercambioClavesDiffieHellman(int p, int r, int x, int X, int K, int Y) {
+// Calcula la clave privada utilizando el algoritmo de intercambio de claves Diffie-Hellman
+void intercambio_claves_diffie_hellman(int p, int r, int x, int X, int K, int Y) {
     srand(time(NULL));
     x = rand() % (p - 2) + 1;
     X = mod_exp(r, x, p);
@@ -110,26 +117,28 @@ void intercambioClavesDiffieHellman(int p, int r, int x, int X, int K, int Y) {
     getchar();
 }
 
-void realizarIntercambioClave() {
-    int p = getNumeroPrimo();
-    int r = getRaizPrimitiva(p);
+// Solicita los parámetros y ejecuta el intercambio de claves Diffie-Hellman
+void realizar_intercambio_clave() {
+    int p = obtener_numero_primo();
+    int r = obtener_raiz_primitiva(p);
     int x, X, Y, K;
 
-    intercambioClavesDiffieHellman(p, r, x, X, K, Y);
+    intercambio_claves_diffie_hellman(p, r, x, X, K, Y);
 }
 
-void realizarIntercambioClaveEstatico() {
+// Ejecuta el intercambio de claves Diffie-Hellman con valores estáticos
+void realizar_intercambio_clave_estatico() {
     // Número primo estático
     int p = 23; 
     // Raíz primitiva estática
     int r = 5; 
     int x, X, Y, K;
 
-    intercambioClavesDiffieHellman(p, r, x, X, K, Y);
+    intercambio_claves_diffie_hellman(p, r, x, X, K, Y);
 }
 
-
-void mostrarCreditos() {
+// Muestra los créditos del programa
+void mostrar_creditos() {
     printf("\n--- Créditos ---\n");
     printf("Participantes:\n");
     printf("1. Sergio Paredes Medina\n");
@@ -137,7 +146,8 @@ void mostrarCreditos() {
     printf("Gracias por usar este programa.\n");
 }
 
-void mostrarMenu() {
+// Muestra el menú principal y gestiona la selección del usuario
+void mostrar_menu() {
     int opcion;
 
     do {
@@ -150,13 +160,13 @@ void mostrarMenu() {
 
         switch (opcion) {
             case 1:
-                realizarIntercambioClave();
+                realizar_intercambio_clave();
                 break;
             case 2:
-                realizarIntercambioClaveEstatico();
+                realizar_intercambio_clave_estatico();
                 break;
             case 3:
-                mostrarCreditos();
+                mostrar_creditos();
                 printf("Saliendo del programa...\n");
                 break;
             default:
@@ -165,7 +175,8 @@ void mostrarMenu() {
     } while (opcion != 3);
 }
 
+// Función principal del programa
 int main() {
-    mostrarMenu();
+    mostrar_menu();
     return 0;
 }
