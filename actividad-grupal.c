@@ -142,7 +142,10 @@ void mostrar_creditos() {
     printf("\n--- Créditos ---\n");
     printf("Participantes:\n");
     printf("1. Sergio Paredes Medina\n");
-    printf("2. Manuel Ortega Martí\n");
+    printf("2. Arnau Erta Carmona\n");
+    printf("3. Jon Miguel Magallón\n");
+    printf("4. Yago\n");
+    printf("5. Manuel Ortega Martí\n");
     printf("Gracias por usar este programa.\n");
 }
 
